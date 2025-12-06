@@ -1,17 +1,22 @@
-import { useState } from "react";
-const initialGameBoard = new Array(3).fill(new Array(3).fill(null));
+const initialGameBoard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
 
-export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
-  const [gameBoard, setGameBoard] = useState(initialGameBoard);
-  const handlePlayerClick = (rowInd, colInd) => {
-    console.log(`user clicking on ${rowInd} and ${colInd}`);
-    setGameBoard((previousGameBoard) => {
-      const updatedGameBoard = [...previousGameBoard].map((row) => [...row]);
-      updatedGameBoard[rowInd][colInd] = activePlayerSymbol;
-      return updatedGameBoard;
-    });
-    onSelectSquare();
-  };
+export default function GameBoard({ gameBoard, onSelectSquare }) {
+  //   const [gameBoard, setGameBoard] = useState(initialGameBoard);
+
+  //   const handlePlayerClick = (rowInd, colInd) => {
+  //     console.log(`user clicking on ${rowInd} and ${colInd}`);
+  //     setGameBoard((previousGameBoard) => {
+  //       const updatedGameBoard = [...previousGameBoard].map((row) => [...row]);
+  //       updatedGameBoard[rowInd][colInd] = activePlayerSymbol;
+  //       return updatedGameBoard;
+  //     });
+  //     onSelectSquare();
+  //   };
+
   return (
     <ol id="game-board">
       {gameBoard.map((row, rowInd) => {
@@ -21,8 +26,14 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
               {row.map((col, colInd) => {
                 return (
                   <li key={colInd}>
-                    <button onClick={() => handlePlayerClick(rowInd, colInd)}>
-                      {gameBoard[rowInd][colInd]}
+                    <button
+                      onClick={() => {
+                        console.log(rowInd, colInd);
+                        onSelectSquare(rowInd, colInd);
+                      }}
+                      disabled={!!col}
+                    >
+                      {col}
                     </button>
                   </li>
                 );
